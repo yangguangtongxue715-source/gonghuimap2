@@ -5293,6 +5293,183 @@ function normalizeSearchBar(){
   observer.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
+<style id="iosMapFinalFix">
+/* Final pass: remove remaining dark/AI dashboard styling and keep map chrome clean. */
+#iosSearchBtn{display:none !important;}
+#siSearchBtn{display:block !important;opacity:1 !important;visibility:visible !important;}
+body.detail-mode #sb,
+body.panel-mode #sb,
+body.detail-mode #siSearchBtn,
+body.panel-mode #siSearchBtn,
+body.detail-mode #iosSearchBtn,
+body.panel-mode #iosSearchBtn{
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  transform:translate3d(0,-12px,0) !important;
+}
+.leaflet-top.leaflet-right{top:82px !important;right:12px !important;}
+.leaflet-top.leaflet-left{top:82px !important;left:12px !important;}
+.leaflet-control-layers,.leaflet-control-locate,.leaflet-control-zoom{
+  border:0 !important;
+  box-shadow:0 6px 18px rgba(15,23,42,.12) !important;
+}
+#st{display:none !important;}
+#dash,#rep,#stp,#scanPanel,#routePanel,#peopleFilterPanel,#mapFilterPanel{
+  background:rgba(246,247,251,.86) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(1.08) !important;
+  backdrop-filter:blur(18px) saturate(1.08) !important;
+}
+#dashBox,#repBox,#stpBody,#scanBox,#routeBox,#peopleFilterBox,#mapFilterBox{
+  width:min(92vw,720px) !important;
+  max-width:720px !important;
+  margin:18px auto !important;
+  padding:20px !important;
+  background:rgba(255,255,255,.98) !important;
+  color:#111827 !important;
+  border:1px solid rgba(17,24,39,.08) !important;
+  border-radius:24px !important;
+  box-shadow:0 16px 42px rgba(15,23,42,.16) !important;
+  text-shadow:none !important;
+}
+#dashBox *,#repBox *,#stpBody *,#scanBox *,#routeBox *,#peopleFilterBox *,#mapFilterBox *{
+  text-shadow:none !important;
+}
+#dashBox h2,#repBox h2,#scanBox h2,#routeBox h2,#peopleFilterBox h2,#mapFilterBox h2{
+  color:#111827 !important;
+  font-size:24px !important;
+  line-height:1.2 !important;
+  margin:0 0 16px !important;
+}
+#dashBox table,#repBox table,#stpBody table{
+  width:100% !important;
+  border-collapse:separate !important;
+  border-spacing:0 !important;
+  background:#fff !important;
+  color:#111827 !important;
+  font-size:14px !important;
+}
+#dashBox th,#dashBox td,#repBox th,#repBox td,#stpBody th,#stpBody td{
+  color:#111827 !important;
+  background:#fff !important;
+  border-bottom:1px solid #e5e7eb !important;
+  padding:10px 8px !important;
+  opacity:1 !important;
+}
+#dashBox th,#repBox th,#stpBody th{
+  color:#1677ff !important;
+  background:#f5f9ff !important;
+  font-weight:800 !important;
+}
+#dashBox [style*="color"],#dashBox span,#dashBox div,
+#repBox [style*="color"],#repBox span,#repBox div{
+  opacity:1 !important;
+}
+#dashBox div[style*="border"],#dashBox .statCard,#dashBox .dashCard{
+  background:#f7fbff !important;
+  color:#111827 !important;
+  border:1px solid #dbeafe !important;
+  box-shadow:none !important;
+}
+.mfSub{display:none !important;}
+.mfGroup,.pfGroup{
+  background:#fff !important;
+  color:#111827 !important;
+  border:1px solid #e5e7eb !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+  padding:14px !important;
+}
+.mfGroup .mfGroupTitle,.pfHint,.routeSub,.scanSub{
+  color:#6b7280 !important;
+}
+.mfCheckRow,.pfCheckRow{
+  color:#111827 !important;
+  font-size:17px !important;
+}
+.mfCheckRow input[type="checkbox"],.pfCheckRow input[type="checkbox"]{
+  accent-color:#1677ff !important;
+}
+#mfApplyBtn,#pfApplyBtn,.navBtn{
+  background:#1677ff !important;
+  color:#fff !important;
+  box-shadow:none !important;
+}
+#mfClearBtn,#mfCloseBtn,#pfClearBtn,#pfCloseBtn,.detailBtn{
+  background:#f2f6ff !important;
+  color:#1677ff !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+.scanItem,.pfResultItem,.routeStep{
+  background:#fff !important;
+  color:#111827 !important;
+  border:1px solid #e5e7eb !important;
+  border-radius:18px !important;
+  box-shadow:none !important;
+}
+.scanItem b,.pfResultItem b,.routeStep .stepName{
+  color:#111827 !important;
+}
+.scanItem span,.pfResultItem span,.routeStep .stepMeta{
+  color:#6b7280 !important;
+}
+.bs-secondary .bs-card-btn:first-child{display:block !important;}
+@media (max-width:520px){
+  #dashBox,#repBox,#stpBody,#scanBox,#routeBox,#peopleFilterBox,#mapFilterBox{
+    width:calc(100vw - 28px) !important;
+    margin:12px auto !important;
+    padding:16px !important;
+    border-radius:22px !important;
+  }
+  #dashBox table,#repBox table,#stpBody table{
+    font-size:12px !important;
+  }
+  #dashBox th,#dashBox td,#repBox th,#repBox td,#stpBody th,#stpBody td{
+    padding:8px 5px !important;
+  }
+}
+</style>
+<script>
+// Final pass: keep panel state in sync even when old functions open panels directly.
+function iosFinalVisible(el){
+  if(!el) return false;
+  var style=window.getComputedStyle(el);
+  return style.display!=='none' && style.visibility!=='hidden' && style.opacity!=='0';
+}
+function iosFinalSyncChrome(){
+  var panelIds=['routePanel','scanPanel','peopleFilterPanel','mapFilterPanel','dash','rep','stp'];
+  var anyPanel=panelIds.some(function(id){return iosFinalVisible(document.getElementById(id));});
+  document.body.classList.toggle('panel-mode', anyPanel);
+  if(anyPanel){
+    hideBottomSheet();
+    var sr=document.getElementById('sr');
+    if(sr) sr.style.display='none';
+  }else if(!document.body.classList.contains('detail-mode')){
+    showBottomSheet();
+  }
+}
+function iosFinalCleanText(root){
+  replaceDeAiText(root || document.body);
+  var mfSub=document.querySelector('.mfSub');
+  if(mfSub) mfSub.textContent='';
+}
+['showDash','showReport','openMapFilterPanel','openPeopleFilterPanel','openRouteMode','openTodayRoute','openTomorrowRoute','findNearby','runDailyScan'].forEach(function(name){
+  var old=window[name];
+  if(typeof old==='function' && !old.__iosFinalWrapped){
+    var wrapped=function(){
+      var result=old.apply(this,arguments);
+      setTimeout(function(){iosFinalCleanText(document.body);iosFinalSyncChrome();},0);
+      return result;
+    };
+    wrapped.__iosFinalWrapped=true;
+    window[name]=wrapped;
+  }
+});
+document.addEventListener('click',function(){setTimeout(iosFinalSyncChrome,0);},true);
+setInterval(iosFinalSyncChrome,450);
+setTimeout(function(){iosFinalCleanText(document.body);iosFinalSyncChrome();},0);
+</script>
     
             <div class="folium-map" id="map_04f710b51f423f8f8be25e50a9326aa7" ></div>
         
