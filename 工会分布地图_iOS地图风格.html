@@ -5470,6 +5470,266 @@ document.addEventListener('click',function(){setTimeout(iosFinalSyncChrome,0);},
 setInterval(iosFinalSyncChrome,450);
 setTimeout(function(){iosFinalCleanText(document.body);iosFinalSyncChrome();},0);
 </script>
+<style id="iosMapProductFix">
+/* Product pass: make every tool page quiet, map-first, and non-AI. */
+.bs-secondary{display:none !important;}
+.bs-title{font-size:19px !important;}
+.bs-sub{font-size:12px !important;color:#8a94a6 !important;}
+.bs-action{font-weight:650 !important;}
+.bs-icon i{font-family:"Font Awesome 6 Free","FontAwesome" !important;font-weight:900 !important;}
+
+#iosStatsPanel{
+  position:fixed;
+  inset:0;
+  z-index:2600;
+  display:none;
+  background:rgba(246,247,251,.62);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+}
+#iosStatsPanel.open{display:block;}
+.ios-stats-card{
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:max(18px,env(safe-area-inset-bottom));
+  max-width:520px;
+  margin:0 auto;
+  background:rgba(255,255,255,.98);
+  border:1px solid rgba(17,24,39,.08);
+  border-radius:22px;
+  box-shadow:0 18px 42px rgba(15,23,42,.16);
+  padding:18px;
+  color:#111827;
+}
+.ios-stats-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.ios-stats-title{font-size:20px;font-weight:800;}
+.ios-close{
+  width:34px;height:34px;border:0;border-radius:50%;
+  background:#f3f4f6;color:#475467;font-size:20px;line-height:34px;text-align:center;
+}
+.ios-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ios-stat-tile{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:12px;}
+.ios-stat-value{font-size:22px;font-weight:800;color:#1677ff;line-height:1.1;}
+.ios-stat-label{font-size:12px;color:#6b7280;margin-top:4px;}
+.ios-stat-row{display:flex;align-items:center;gap:8px;margin-top:12px;color:#111827;}
+.ios-stat-row input{flex:1;min-width:0;height:40px;border:1px solid #d0d5dd;border-radius:12px;padding:0 12px;background:#fff;color:#111827;}
+
+/* All function pages follow the same simple white sheet language as filter. */
+#dashBox,#repBox,#scanBox,#routeBox,#peopleFilterBox,#mapFilterBox,#stpBody{
+  max-height:calc(100vh - 38px) !important;
+  overflow:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+}
+#dashBox h2:before,#repBox h2:before,#scanBox h2:before,#routeBox h2:before,#peopleFilterBox h2:before,#mapFilterBox h2:before{
+  content:"" !important;
+}
+.scanClose,.dclose,.pclose{
+  background:#f3f4f6 !important;
+  color:#475467 !important;
+  border:0 !important;
+  border-radius:999px !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+.scanSection h3,#scanBox h3,#routeBox h3{
+  color:#111827 !important;
+  font-size:17px !important;
+  margin:18px 0 10px !important;
+  text-shadow:none !important;
+}
+.scanItem,.routeStep,.pfResultItem{
+  margin-bottom:10px !important;
+  padding:14px !important;
+}
+.scanEmpty{
+  background:#f8fafc !important;
+  color:#667085 !important;
+  border:1px solid #e5e7eb !important;
+  border-radius:16px !important;
+  padding:14px !important;
+}
+.scanItem div[style*="color:var(--cy-accent)"],
+.scanItem div[style*="color:var(--cy-warn)"],
+.scanItem span[style*="color:var(--cy-warn)"],
+.scanItem span[style*="color:#ffaa00"]{
+  color:#ff8a1f !important;
+  text-shadow:none !important;
+}
+.routeChoice{gap:10px !important;}
+.routeChoice button,.orderSwitch button,#repTabs button{
+  background:#f2f6ff !important;
+  color:#1677ff !important;
+  border:0 !important;
+  border-radius:14px !important;
+  box-shadow:none !important;
+}
+.routeChoice button.active,.orderSwitch button.active,#repTabs button.active{
+  background:#1677ff !important;
+  color:#fff !important;
+}
+
+/* Detail page: remove AI-feeling overview and assistant surfaces. */
+.detailPanel{
+  line-height:1.45 !important;
+}
+.detailPanel .intelBox,
+.detailPanel [id^="aiOut"],
+.detailPanel .recResultBox,
+.detailPanel button[onclick*="aiQueryIntel"],
+.detailPanel button[onclick*="aiQueryDS"],
+.detailPanel button[onclick*="aiQueryGLM"],
+.detailPanel button[onclick*="startVisitRec"],
+.detailPanel button[onclick*="stopVisitRec"],
+.detailPanel button[onclick*="genAi"],
+.detailPanel button[onclick*="openDoubaoSearch"],
+.detailPanel button[data-tab="ai"],
+.detailPanel [data-tab="ai"]{
+  display:none !important;
+}
+.detailPanel .dtabBar{
+  gap:8px !important;
+  padding:4px !important;
+  border:0 !important;
+  border-radius:16px !important;
+  background:#f3f4f6 !important;
+}
+.detailPanel .dtabBar button{
+  border-radius:12px !important;
+  color:#667085 !important;
+  font-size:14px !important;
+  padding:9px 6px !important;
+}
+.detailPanel .dtabBar button.active{
+  background:#fff !important;
+  color:#1677ff !important;
+  box-shadow:0 2px 8px rgba(15,23,42,.08) !important;
+}
+.detailPanel div[id^="dsec_"][id$="_ai"]{display:none !important;}
+.detailPanel a[href^="tel:"]{
+  color:#1677ff !important;
+  background:#f2f6ff !important;
+  border-radius:12px !important;
+  padding:4px 8px !important;
+}
+
+/* Filter pages should not explain boolean logic to end users. */
+.mfSub{display:none !important;}
+</style>
+<script>
+function iosOpenStatsPanel(){
+  var panel=document.getElementById('iosStatsPanel');
+  if(!panel){
+    panel=document.createElement('div');
+    panel.id='iosStatsPanel';
+    panel.innerHTML='<div class="ios-stats-card">'
+      + '<div class="ios-stats-head"><div class="ios-stats-title">跟进统计</div><button class="ios-close" onclick="iosCloseStatsPanel()">×</button></div>'
+      + '<div class="ios-stats-grid">'
+      + '<div class="ios-stat-tile"><div class="ios-stat-value" id="iosStToday">0</div><div class="ios-stat-label">今日备注</div></div>'
+      + '<div class="ios-stat-tile"><div class="ios-stat-value" id="iosStVisited">0</div><div class="ios-stat-label">已拜访</div></div>'
+      + '<div class="ios-stat-tile"><div class="ios-stat-value" id="iosStNotVisited">0</div><div class="ios-stat-label">未拜访</div></div>'
+      + '<div class="ios-stat-tile"><div class="ios-stat-value" id="iosStCalls">0</div><div class="ios-stat-label">今日电话</div></div>'
+      + '</div>'
+      + '<div class="ios-stat-row"><span>今日电话</span><input id="iosCallsInput" type="number" min="0" inputmode="numeric"><button class="bs-card-btn" style="min-height:40px;text-align:center" onclick="iosSaveCallsAndClose()">保存</button></div>'
+      + '</div>';
+    document.body.appendChild(panel);
+    panel.addEventListener('click',function(e){ if(e.target===panel) iosCloseStatsPanel(); });
+  }
+  iosRefreshStatsPanel();
+  panel.classList.add('open');
+  hideBottomSheet();
+}
+function iosCloseStatsPanel(){
+  var panel=document.getElementById('iosStatsPanel');
+  if(panel) panel.classList.remove('open');
+  showBottomSheet();
+}
+function iosRefreshStatsPanel(){
+  var map=[['iosStToday','stToday'],['iosStVisited','stVisited'],['iosStNotVisited','stNotVisited']];
+  map.forEach(function(pair){
+    var to=document.getElementById(pair[0]), from=document.getElementById(pair[1]);
+    if(to && from) to.textContent=from.textContent || '0';
+  });
+  var calls=document.getElementById('callsInput');
+  var iosCalls=document.getElementById('iosCallsInput');
+  var iosStCalls=document.getElementById('iosStCalls');
+  if(iosCalls && calls) iosCalls.value=calls.value || '0';
+  if(iosStCalls && calls) iosStCalls.textContent=calls.value || '0';
+}
+function iosSaveCallsAndClose(){
+  var calls=document.getElementById('callsInput');
+  var iosCalls=document.getElementById('iosCallsInput');
+  if(calls && iosCalls) calls.value=iosCalls.value || 0;
+  if(typeof saveTodayCalls==='function') saveTodayCalls();
+  iosRefreshStatsPanel();
+}
+function iosReturnToMap(){
+  ['peopleFilterPanel','mapFilterPanel','scanPanel','routePanel','dash','rep','stp'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+  document.body.classList.remove('panel-mode');
+  showBottomSheet();
+  setBottomSheetState('collapsed');
+}
+function iosPatchBottomSheetActions(){
+  var actions=document.querySelectorAll('.bs-action');
+  actions.forEach(function(btn){
+    var label=(btn.textContent||'').trim();
+    if(label==='更多'){
+      btn.setAttribute('onclick','iosOpenStatsPanel()');
+      btn.setAttribute('aria-label','跟进');
+      var span=btn.querySelector('span:last-child');
+      if(span) span.textContent='跟进';
+      var icon=btn.querySelector('.bs-icon');
+      if(icon) icon.innerHTML='<i class="fa-solid fa-list-check">跟</i>';
+    }
+  });
+}
+function iosPatchDetailTabs(){
+  document.querySelectorAll('.detailPanel').forEach(function(panel){
+    var aiBtn=panel.querySelector('button[data-tab="ai"]');
+    if(aiBtn) aiBtn.remove();
+    var active=panel.querySelector('.dtabBar button.active');
+    if(active && active.dataset && active.dataset.tab==='ai'){
+      var basic=panel.querySelector('.dtabBar button[data-tab="basic"]');
+      if(basic) basic.click();
+    }
+    panel.querySelectorAll('div').forEach(function(div){
+      var txt=(div.textContent||'').trim();
+      if(txt.indexOf('情报概览')>=0 || txt.indexOf('完整度')>=0 || txt.indexOf('建议动作')>=0){
+        div.style.display='none';
+      }
+    });
+  });
+}
+['applyMapFilter','applyPeopleFilter'].forEach(function(name){
+  var old=window[name];
+  if(typeof old==='function' && !old.__iosReturnWrapped){
+    var wrapped=function(){
+      var result=old.apply(this,arguments);
+      setTimeout(function(){
+        iosReturnToMap();
+        iosFinalCleanText(document.body);
+      },80);
+      return result;
+    };
+    wrapped.__iosReturnWrapped=true;
+    window[name]=wrapped;
+  }
+});
+document.addEventListener('click',function(e){
+  setTimeout(function(){
+    iosPatchBottomSheetActions();
+    iosPatchDetailTabs();
+    iosFinalCleanText(document.body);
+  },60);
+},true);
+setTimeout(function(){
+  iosPatchBottomSheetActions();
+  iosPatchDetailTabs();
+},0);
+</script>
     
             <div class="folium-map" id="map_04f710b51f423f8f8be25e50a9326aa7" ></div>
         
